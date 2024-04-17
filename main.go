@@ -10,19 +10,18 @@ import (
 const POOL_SIZE = 10000
 
 func main() {
-	print(process(generate()))
-
+	taskCh := generate()
+	resultCh := process(taskCh)
+	print(resultCh)
 }
 
 type Task struct {
 	id            int
 	creationTime  time.Time // время создания
 	executionTime time.Time // время выполнения
-	result        []byte
-	err           error
+	result        []byte    // результат
+	err           error     // ошибка
 }
-
-// Пайплайн
 
 // Генерация тасок
 func generate() <-chan Task {
